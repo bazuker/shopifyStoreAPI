@@ -1,0 +1,41 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    hostname: postgres
+    environment:
+      POSTGRES_DB: dev
+      POSTGRES_USER: postgres-dev
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+    - 5432:5432
+    networks:
+      - pgnetwork
+    container_name: shopifystoredb
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+    - db
+    ports:
+    - "5555:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+  app:
+    image: kisulken/shopifystoreapi:v4
+    build: .
+    command: ["go", "run", "main.go"]
+    volumes:
+    - .:/go/src/shopfiyStoreAPI
+    ports:
+    - 8080:8080
+    depends_on:
+    - db
+    links:
+    - db
+    networks:
+    - pgnetwork
+    container_name: shopifystoreapi
+networks:
+  pgnetwork:
+    driver: "bridge"
