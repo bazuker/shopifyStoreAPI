@@ -24,45 +24,45 @@ const (
 )
 
 var (
-	ErrInvalidId = errors.New("invalid id")
-	ErrInvalidStoreId = errors.New("invalid store id")
+	ErrInvalidId        = errors.New("invalid id")
+	ErrInvalidStoreId   = errors.New("invalid store id")
 	ErrInvalidProductId = errors.New("invalid product id")
-	ErrInvalidOrderId = errors.New("invalid order id")
+	ErrInvalidOrderId   = errors.New("invalid order id")
 )
 
 type Store struct {
-	Id int `json:"id"`
-	Name string `json:"name"`
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
 	Description string `json:"description"`
 }
 
 type Product struct {
-	Id int `json:"id"`
-	StoreId int `json:"store_id"`
-	Name string `json:"name"`
-	Price float64 `json:"price"`
+	Id      int     `json:"id"`
+	StoreId int     `json:"store_id"`
+	Name    string  `json:"name"`
+	Price   float64 `json:"price"`
 }
 
 type Item struct {
-	Id int `json:"id"`
-	ProductId int `json:"product_id"`
-	StoreId int `json:"store_id"`
-	Name string `json:"name"`
-	Price float64 `json:"price"`
+	Id        int     `json:"id"`
+	ProductId int     `json:"product_id"`
+	StoreId   int     `json:"store_id"`
+	Name      string  `json:"name"`
+	Price     float64 `json:"price"`
 }
 
 type Order struct {
-	Id int `json:"id"`
-	Total float64 `json:"total"`
-	Created string `json:"created"`
-	StoreId int `json:"store_id"`
-	Items []Item `json:"items"`
+	Id      int     `json:"id"`
+	Total   float64 `json:"total"`
+	Created string  `json:"created"`
+	StoreId int     `json:"store_id"`
+	Items   []Item  `json:"items"`
 }
 
 type OrderMap map[int]*Order
 
 type GenericResponse struct {
-	Status string `json:"status"`
+	Status  string `json:"status"`
 	Message string `json:"data"`
 }
 
@@ -133,7 +133,9 @@ func getStore(c lars.Context) {
 		return
 	}
 
-	rows, err := db.Query("SELECT * FROM stores WHERE id=$1", storeId)
+	const q = `SELECT * FROM stores WHERE id=$1`
+
+	rows, err := db.Query(q, storeId)
 	if err != nil {
 		internalError(c, err)
 		return
@@ -190,7 +192,9 @@ func deleteStore(c lars.Context) {
 		return
 	}
 
-	result, err := db.Exec("DELETE FROM stores WHERE id=$1", id)
+	const q = `DELETE FROM stores WHERE id=$1`
+
+	result, err := db.Exec(q, id)
 	if err != nil {
 		internalError(c, err)
 		return
@@ -360,7 +364,9 @@ func deleteProduct(c lars.Context) {
 		return
 	}
 
-	result, err := db.Exec("DELETE FROM products WHERE id=$1 AND store_id=$2", id, storeId)
+	const q = `DELETE FROM products WHERE id=$1 AND store_id=$2`
+
+	result, err := db.Exec(q, id, storeId)
 	if err != nil {
 		internalError(c, err)
 		return
@@ -452,7 +458,7 @@ func getItems(c lars.Context) {
 			internalError(c, err)
 			return
 		}
-		products = append(products, Item{id, productId,storeId, name, price})
+		products = append(products, Item{id, productId, storeId, name, price})
 	}
 
 	c.JSON(http.StatusOK, products)
@@ -498,7 +504,7 @@ WHERE items.id=$1 AND items.store_id=$2 AND items.product_id=$3`
 			internalError(c, err)
 			return
 		}
-		c.JSON(http.StatusOK, Item{id, productId, storeId,name, price})
+		c.JSON(http.StatusOK, Item{id, productId, storeId, name, price})
 		return
 	}
 
@@ -583,12 +589,15 @@ func orderItem(c lars.Context) {
 	}
 
 	// update total price of the order
-	q2 := `UPDATE orders
+	// if we are not extending the order, then we are subtracting from the price
+	var q2 string
+
+	if extendOrder {
+		q2 = `UPDATE orders
 SET total=total+subquery.price
 FROM (SELECT products.id, products.price FROM products WHERE products.id=$1) AS subquery
 WHERE orders.id=$2`
-	// if we are not extending the order, then we are subtracting from the price
-	if !extendOrder {
+	} else {
 		q2 = `UPDATE orders
 SET total=total-subquery.price
 FROM (SELECT products.id, products.price FROM products WHERE products.id=$1) AS subquery
@@ -686,11 +695,11 @@ WHERE orders.store_id=$1 LIMIT 100`
 		} else {
 			items := []Item{{itemId, productId, storeId, productName, productsPrice}}
 			orders[id] = &Order{
-				Id: id,
-				Total: total,
+				Id:      id,
+				Total:   total,
 				Created: created,
 				StoreId: storeId,
-				Items: items,
+				Items:   items,
 			}
 		}
 	}
@@ -747,11 +756,11 @@ WHERE orders.store_id=$2 AND orders.id=$1`
 		} else {
 			items := []Item{{itemId, productId, storeId, productName, productsPrice}}
 			order = &Order{
-				Id: id,
-				Total: total,
+				Id:      id,
+				Total:   total,
 				Created: created,
 				StoreId: storeId,
-				Items: items,
+				Items:   items,
 			}
 		}
 	}
