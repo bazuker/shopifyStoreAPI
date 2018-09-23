@@ -1,13 +1,20 @@
 # Code for Shopify Winter Internship challenge 2019.
 shopifyStoreAPI is an application that provides basic RESTful online store functionality.
 
-## API
+## API doc
 ### 1. Store
 
 __/store__
 
 GET - returns all available stores.
+
 POST - create a new store.
+```json
+{
+  "name": "My cool store",
+  "description": "Store description"
+}
+```
 
 __/store/:storeid__
 
@@ -21,7 +28,16 @@ All the endpoints below follow the same pattern of GET, POST, PATCH, DELETE as t
 
 __/store/:storeid/products__
 
-GET, POST
+GET
+
+POST
+```json
+{
+  "name": "Phone",
+  "price": 999.9
+}
+```
+
 
 __/store/:storeid/products/:productid__
 
@@ -31,7 +47,12 @@ GET, PATCH, DELETE
 
 __/store/:storeid/products/:productid/items__
 
-GET, POST
+GET
+
+POST
+```
+json body is not required
+```
 
 __/store/:storeid/products/:productid/items/:itemid__
 
@@ -47,8 +68,13 @@ DELETE - Removes an item with :itemid from the existing order with a specified I
 __/store/:storeid/orders__
 
 GET - returns all non-empty orders.
-POST - creates a new empty order.
 
-/store/:storeid/orders/:orderid
+POST - creates a new empty order.
+```
+json body is not required
+```
+
+__/store/:storeid/orders/:orderid__
+
 GET - get a specific order.
 DELETE - delete a specific order (all the related items must be unattached/removed beforehand).
