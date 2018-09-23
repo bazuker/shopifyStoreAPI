@@ -119,8 +119,9 @@ GET, DELETE
 
 __/store/:storeid/products/:productid/items/:itemid/order?id=yourOrderId__
 
-POST - Adds an item with :itemid to the existing order with a specified ID.
-DELETE - Removes an item with :itemid from the existing order with a specified ID.
+POST - Adds an item with :itemid to the existing order with a specified ID automatically adding a price of the product to the total
+
+DELETE - Removes an item with :itemid from the existing order with a specified ID automatically deducting the cost of the item
 
 ### 4. Orders
 
