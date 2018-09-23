@@ -1,6 +1,63 @@
 # Code for Shopify Winter Internship challenge 2019.
 shopifyStoreAPI is an application that provides basic RESTful online store functionality.
 
+## API endpoints
+| endpoint       | methods       |
+| -------------  |:-------------:| 
+| /store         | GET, POST     | 
+| /store/:storeid| GET, PATCH, DELETE      |
+| /store/:storeid/products  | GET, POST      |
+| /store/:storeid/products/:productid  | GET, PATCH, DELETE      |
+| /store/:storeid/products/:productid/items  | GET,  POST      |
+| /store/:storeid/products/:productid/items/:itemid  | GET,  DELETE      |
+| /store/:storeid/products/:productid/items/:itemid/order  | POST,  DELETE      |
+| /store/:storeid/orders | GET,  POST      |
+| /store/:storeid/orders/:orderid  | GET,  DELETE      |
+
+## API responses
+All API endpoints will respond with a content-type application/json, corresponding http codes and contain a valid json data.
+
+__GET__ methods will respond with requested data i.e store information, product information etc. in case of success
+```
+[
+    {
+        "id": 1,
+        "name": "My very cool store",
+        "description": "Descriptive description"
+    }
+]
+```
+"not found" in case if the requested data was not located in the database
+```json
+{
+    "status": "fail",
+    "data": "not found"
+}
+```
+
+__POST__ methods in case of successful insertion will respond with
+```json
+{
+    "status": "ok",
+    "data": id
+}
+```
+where *id* is a decimal number representing a unique identifier of the object
+
+All other methods in case of success will respond with 
+```json
+{
+    "status": "ok"
+}
+```
+and in case of failure
+```json
+{
+    "status": "fail",
+    "data": "error message"
+}
+```
+
 ## API doc
 ### 1. Store
 
@@ -19,7 +76,9 @@ POST - create a new store.
 __/store/:storeid__
 
 GET - get specified store with id.
+
 PATCH - update a specific store's information.
+
 DELETE - delete a specific store.
 
 All the endpoints below follow the same pattern of GET, POST, PATCH, DELETE as the store endpoints described above.
@@ -77,4 +136,5 @@ json body is not required
 __/store/:storeid/orders/:orderid__
 
 GET - get a specific order.
+
 DELETE - delete a specific order (all the related items must be unattached/removed beforehand).
