@@ -61,7 +61,7 @@ and in case of failure
 ## API doc
 ### 1. Store
 
-__/store__
+- __/store__
 
 GET - returns all available stores.
 
@@ -73,7 +73,8 @@ POST - create a new store.
 }
 ```
 
-__/store/:storeid__
+
+- __/store/:storeid__
 
 GET - get specified store with id.
 
@@ -85,7 +86,7 @@ All the endpoints below follow the same pattern of GET, POST, PATCH, DELETE as t
 
 ### 2. Products
 
-__/store/:storeid/products__
+- __/store/:storeid/products__
 
 GET
 
@@ -98,13 +99,13 @@ POST
 ```
 
 
-__/store/:storeid/products/:productid__
+- __/store/:storeid/products/:productid__
 
 GET, PATCH, DELETE
 
 ### 3. Items
 
-__/store/:storeid/products/:productid/items__
+- __/store/:storeid/products/:productid/items__
 
 GET
 
@@ -113,11 +114,11 @@ POST
 json body is not required
 ```
 
-__/store/:storeid/products/:productid/items/:itemid__
+- __/store/:storeid/products/:productid/items/:itemid__
 
 GET, DELETE
 
-__/store/:storeid/products/:productid/items/:itemid/order?id=yourOrderId__
+- __/store/:storeid/products/:productid/items/:itemid/order?id=yourOrderId__
 
 POST - Adds an item with :itemid to the existing order with a specified ID automatically adding a price of the product to the total
 
@@ -125,7 +126,7 @@ DELETE - Removes an item with :itemid from the existing order with a specified I
 
 ### 4. Orders
 
-__/store/:storeid/orders__
+- __/store/:storeid/orders__
 
 GET - returns all non-empty orders.
 
@@ -134,7 +135,7 @@ POST - creates a new empty order.
 json body is not required
 ```
 
-__/store/:storeid/orders/:orderid__
+- __/store/:storeid/orders/:orderid__
 
 GET - get a specific order.
 
