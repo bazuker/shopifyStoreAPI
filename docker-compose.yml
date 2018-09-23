@@ -2,7 +2,7 @@ version: '3'
 services:
   db:
     image: postgres
-    hostname: postgres
+    hostname: db
     environment:
       POSTGRES_DB: dev
       POSTGRES_USER: postgres-dev
@@ -24,7 +24,7 @@ services:
   app:
     image: kisulken/shopifystoreapi:v4
     build: .
-    command: ["go", "run", "main.go"]
+    command: ["./wait.sh", "db:5432", "--", "go", "run", "main.go"]
     volumes:
     - .:/go/src/shopfiyStoreAPI
     ports:

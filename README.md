@@ -6,11 +6,16 @@ compose yourself
 ```bash
 $ git clone https://github.com/kisulken/shopifyStoreAPI
 $ cd shopifyStoreAPI
+$ docker-compose build
 $ docker-compose up
 ```
 or run from the existing image
 ```bash
 docker run -it kisulken/shopifystoreapi:v5
+```
+also, do not forget to populate your database
+```bash
+docker exec postgres psql -U postgres-dev dev < dump.sql
 ```
 
 ## API endpoints
