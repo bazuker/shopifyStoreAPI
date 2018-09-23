@@ -10,7 +10,7 @@ $ docker-compose up
 ```
 or run from the existing image
 ```bash
-docker run --rm kisulken/shopifystoreapi:v5
+docker run -it kisulken/shopifystoreapi:v5
 ```
 
 ## API endpoints
