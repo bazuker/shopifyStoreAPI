@@ -1,6 +1,18 @@
 # Code for Shopify Winter Internship challenge 2019.
 shopifyStoreAPI is an application that provides basic RESTful online store functionality.
 
+## Installation with Docker
+compose yourself
+```bash
+$ git clone https://github.com/kisulken/shopifyStoreAPI
+$ cd shopifyStoreAPI
+$ docker-compose up
+```
+or run from the existing image
+```bash
+docker run --rm kisulken/shopifystoreapi:v5
+```
+
 ## API endpoints
 | endpoint       | methods       |
 | -------------  |:-------------:| 
