@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopifystoreapi-deployment
+  labels:
+    app: shopifystoreapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopifystoreapi
+  template:
+    metadata:
+      labels:
+        app: shopifystoreapi
+    spec:
+      containers:
+      - name: shopifystoreapi
+        image: kisulken/shopifystoreapi:v4
+        ports:
+        - containerPort: 8080

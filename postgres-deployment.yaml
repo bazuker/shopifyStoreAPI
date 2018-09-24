@@ -1,54 +1,27 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: shopify-store-postgresql
-  namespace: shopify-store
+  name: postgres
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: gitlab-postgresql
+        app: postgres
     spec:
       containers:
-      - name: postgresql
-        image: postgres
-        imagePullPolicy: Always
-        env:
-        - name: DB_USER
-          value: postgres-dev
-        - name: DB_PASS
-          value: mysecrectpassword
-        - name: DB_NAME
-          value: dev
-        - name: DB_EXTENSION
-          value: pg_trgm
+      - name: postgres
+        image: postgres:10.4
+        imagePullPolicy: "IfNotPresent"
         ports:
-        - name: postgres
-          containerPort: 5432
+        - containerPort: 5432
+        envFrom:
+        - configMapRef:
+            name: postgres-config
         volumeMounts:
-        - mountPath: /var/lib/postgresql
-          name: data
-        livenessProbe:
-          exec:
-            command:
-            - pg_isready
-            - -h
-            - localhost
-            - -U
-            - postgres-dev
-          initialDelaySeconds: 30
-          timeoutSeconds: 5
-        readinessProbe:
-          exec:
-            command:
-            - pg_isready
-            - -h
-            - localhost
-            - -U
-            - postgres-dev
-          initialDelaySeconds: 5
-          timeoutSeconds: 1
+        - mountPath: /var/lib/postgresql/data
+          name: postgredb
       volumes:
-      - name: data
-        emptyDir: {}
+      - name: postgredb
+        persistentVolumeClaim:
+          claimName: postgres-pv-claim

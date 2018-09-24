@@ -1,0 +1,17 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "shopifystoreapi-service"
+  namespace: "default"
+  labels:
+    run: "shopifystoreapi"
+spec:
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 8080
+  selector:
+    run: "shopifystoreapi"
+  type: "LoadBalancer"
+  loadBalancerIP: ""
