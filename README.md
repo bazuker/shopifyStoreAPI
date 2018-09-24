@@ -15,7 +15,7 @@ $ docker run -it kisulken/shopifystoreapi:v5
 ```
 also, do not forget to populate your database
 ```bash
-$ docker exec postgres psql -U postgres-dev dev < dump.sql
+$ docker exec shopifystoredb psql -U postgres-dev dev < dump.sql
 ```
 kubernetes
 ```bash
@@ -84,7 +84,7 @@ and in case of failure
 }
 ```
 
-## API doc
+## API docs
 ### 1. Store
 
 - __/store__
@@ -166,3 +166,6 @@ json body is not required
 GET - get a specific order.
 
 DELETE - delete a specific order (all the related items must be unattached/removed beforehand).
+
+---
+Author: Daniil Furmanov @ github.com/kisulken
