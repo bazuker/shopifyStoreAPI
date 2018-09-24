@@ -11,11 +11,20 @@ $ docker-compose up
 ```
 or run from the existing image
 ```bash
-docker run -it kisulken/shopifystoreapi:v5
+$ docker run -it kisulken/shopifystoreapi:v5
 ```
 also, do not forget to populate your database
 ```bash
-docker exec postgres psql -U postgres-dev dev < dump.sql
+$ docker exec postgres psql -U postgres-dev dev < dump.sql
+```
+kubernetes
+```bash
+$ kubectl create -f postgres-configmap.yaml
+$ kubectl create -f postgres-volume.yaml
+$ kubectl create -f postgres-deployment.yaml
+$ kubectl create -f postgres-service.yaml
+$ kubectl create -f app-deployment.yaml
+$ kubectl create -f app-service.yaml
 ```
 
 ## API endpoints
