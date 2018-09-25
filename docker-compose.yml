@@ -4,6 +4,7 @@ services:
     image: postgres
     hostname: db
     environment:
+      GET_HOSTS_FROM: dns
       POSTGRES_DB: dev
       POSTGRES_USER: postgres-dev
       POSTGRES_PASSWORD: mysecretpassword
@@ -15,7 +16,8 @@ services:
   app:
     image: kisulken/shopifystoreapi:v5
     build: .
-    command: ["./wait.sh", "db:5432", "--", "go", "run", "main.go"]
+    environment:
+      GET_HOSTS_FROM: dns
     volumes:
     - .:/go/src/shopfiyStoreAPI
     ports:
@@ -27,6 +29,8 @@ services:
     networks:
     - pgnetwork
     container_name: shopifystoreapi
+    labels:
+      kompose.service.type: LoadBalancer
 networks:
   pgnetwork:
     driver: "bridge"

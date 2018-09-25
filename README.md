@@ -17,7 +17,7 @@ also, do not forget to populate your database
 ```bash
 $ docker exec shopifystoredb psql -U postgres-dev dev < dump.sql
 ```
-kubernetes
+kubernetes mounting
 ```bash
 $ kubectl create -f postgres-configmap.yaml
 $ kubectl create -f postgres-volume.yaml

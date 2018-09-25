@@ -6,3 +6,5 @@ WORKDIR /go/src/shopfiyStoreAPI
 ADD . /go/src/shopfiyStoreAPI
 
 RUN go get -v
+
+RUN ["go", "build", "main.go"]
