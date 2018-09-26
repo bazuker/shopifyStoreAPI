@@ -19,12 +19,10 @@ $ docker exec shopifystoredb psql -U postgres-dev dev < dump.sql
 ```
 kubernetes mounting
 ```bash
-$ kubectl create -f postgres-configmap.yaml
-$ kubectl create -f postgres-volume.yaml
-$ kubectl create -f postgres-deployment.yaml
-$ kubectl create -f postgres-service.yaml
-$ kubectl create -f app-deployment.yaml
-$ kubectl create -f app-service.yaml
+$ kubectl create -f app-service.yaml,app-deployment.yaml,app-claim0-persistentvolumeclaim.yaml,db-deployment.yaml,db-service.yaml
+  kubectl port-forward $DB_POD_NAME 5432:5432
+  ... in another window import dump.sql
+  psql -h localhost -p 5432 -U postgres-dev dev
 ```
 
 ## API endpoints
