@@ -1,5 +1,13 @@
 package main
 
+/*
+
+	Author: Daniil Furmanov
+	Date: September 23, 2018
+	Purpose: Code challenge for Shopify Winter Internship 2019
+
+*/
+
 import (
 	"database/sql"
 	"encoding/json"
